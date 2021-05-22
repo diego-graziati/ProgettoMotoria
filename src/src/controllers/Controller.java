@@ -1,19 +1,20 @@
 package src.controllers;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import src.athlets.AthletsViews;
+import javafx.stage.FileChooser;
+import src.athletes.AthletesViews;
 
+import java.io.File;
 import java.net.URL;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 //In this class all the events triggered in the mainPage.fxml are coded
-public class Controller implements Initializable {
+public class Controller implements Initializable{
 
     @FXML
     public Tab fileLoaderTab;
@@ -51,19 +52,35 @@ public class Controller implements Initializable {
         static_accViews=accViews;
 
         accordionInitializer(static_accViews);
-        LinkedList<AthletsViews> atView = new LinkedList<>();
+        LinkedList<AthletesViews> atView = new LinkedList<>();
 
         int i;
 
         for(i=0;i<50;i++){
-            String s = new String(Integer.toString(i));
-            atView.add(new AthletsViews());
+            atView.add(new AthletesViews());
+            atView.get(i).name="Ciao";
 
-            static_accViews.getPanes().add(atView.get(i).TabCreator(s,"Sono figo e me ne vanto!"));
+            static_accViews.getPanes().add(atView.get(i).TabCreator());
         }
+
+
     }
 
-    public void accordionInitializer(Accordion acc){
+    private void accordionInitializer(Accordion acc){
         acc.prefWidthProperty().bind(static_scrollPaneViews.widthProperty());
+    }
+
+    public void fLoaderButOnAction(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("CSV Files", "*.csv"));
+        File selectedFile=fileChooser.showOpenDialog(null);
+
+        if(selectedFile!=null){
+            System.out.println("File caricato con successo!");
+        }else{
+            System.out.println("File non caricato!");
+        }
     }
 }

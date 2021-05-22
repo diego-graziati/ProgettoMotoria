@@ -8,7 +8,7 @@ import java.util.Scanner;
 //Everything MUST follow strict convention rules, so DO NOT change anything if you don't even know what this file is about!
 public class JsonAnalyzer {
 
-    public boolean fileOpener(String fileName){
+    private boolean fileOpener(String fileName){
         try{
             File inFile = new File(fileName);
             Scanner reader = new Scanner(inFile);
