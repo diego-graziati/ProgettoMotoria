@@ -70,7 +70,7 @@ public class Controller implements Initializable{
         acc.prefWidthProperty().bind(static_scrollPaneViews.widthProperty());
     }
 
-    public void fLoaderButOnAction(ActionEvent event) {
+    public String fLoaderButOnAction(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
 
         fileChooser.getExtensionFilters().addAll(
@@ -82,5 +82,7 @@ public class Controller implements Initializable{
         }else{
             System.out.println("File non caricato!");
         }
+
+        return selectedFile.getPath();
     }
 }
