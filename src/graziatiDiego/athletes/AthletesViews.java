@@ -1,10 +1,8 @@
-package src.athletes;
+package graziatiDiego.athletes;
 
 import javafx.scene.control.TableView;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.GridPane;
-
-import java.util.LinkedList;
 
 //In this class I set up the the whole "Athletes' views" tab environment. It is meant to be used dynamically
 public class AthletesViews {
@@ -13,9 +11,10 @@ public class AthletesViews {
 
     public String name;
     public String surname;
-    public int numVal=0;
+    public int numVal;
 
     static TableView<Measurements> tableView = new TableView();
+    public Measurements measurements = new Measurements();
 
     //Here I create a single TitledPane and set it up
     public TitledPane TabCreator(){

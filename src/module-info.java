@@ -3,9 +3,9 @@ module src{
     requires javafx.controls;
     requires javafx.fxml;
 
-    opens src to javafx.graphics;
+    opens graziatiDiego to javafx.graphics;
 
-    exports src;
-    exports src.controllers;
-    opens src.controllers to javafx.graphics;
+    exports graziatiDiego;
+    exports graziatiDiego.controllers;
+    opens graziatiDiego.controllers to javafx.graphics;
 }

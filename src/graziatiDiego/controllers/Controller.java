@@ -1,16 +1,19 @@
-package src.controllers;
+package graziatiDiego.controllers;
 
+import graziatiDiego.FileManager;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.FileChooser;
-import src.athletes.AthletesViews;
+import graziatiDiego.athletes.AthletesViews;
 
-import java.io.File;
+import java.io.*;
 import java.net.URL;
 import java.util.LinkedList;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 //In this class all the events triggered in the mainPage.fxml are coded
@@ -31,7 +34,6 @@ public class Controller implements Initializable{
     @FXML
     public Accordion accViews;
 
-
     public static Tab static_fileLoaderTab;
     public static Label static_fileLoaderLab;
     public static ToggleButton static_fileLoaderBut;
@@ -40,6 +42,7 @@ public class Controller implements Initializable{
     public static ScrollPane static_scrollPaneViews;
     public static Accordion static_accViews;
 
+    LinkedList<AthletesViews> atView = new LinkedList<>();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -52,25 +55,15 @@ public class Controller implements Initializable{
         static_accViews=accViews;
 
         accordionInitializer(static_accViews);
-        LinkedList<AthletesViews> atView = new LinkedList<>();
 
-        int i;
-
-        for(i=0;i<50;i++){
-            atView.add(new AthletesViews());
-            atView.get(i).name="Ciao";
-
-            static_accViews.getPanes().add(atView.get(i).TabCreator());
-        }
-
-
+        fileLoaderBut.isSelected();
     }
 
     private void accordionInitializer(Accordion acc){
         acc.prefWidthProperty().bind(static_scrollPaneViews.widthProperty());
     }
 
-    public String fLoaderButOnAction(ActionEvent event) {
+    public void fLoaderButOnAction(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
 
         fileChooser.getExtensionFilters().addAll(
@@ -83,6 +76,27 @@ public class Controller implements Initializable{
             System.out.println("File non caricato!");
         }
 
-        return selectedFile.getPath();
+        int i, numAthletes, j;
+
+        FileManager fileManager = new FileManager(Objects.requireNonNull(selectedFile).getPath());
+        try {
+            numAthletes=fileManager.listLoader(atView);
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+            numAthletes=0;
+        }
+
+        for(i=0;i<numAthletes;i++){
+            System.out.print(atView.get(i).name+" ");
+            System.out.println(atView.get(i).surname);
+            for(j=0;j<atView.get(i).getNumVal();j++){
+                System.out.println("\t"+atView.get(i).measurements.getAcceleration());
+                System.out.println("\t"+atView.get(i).measurements.getSpeed());
+                System.out.println("\t"+atView.get(i).measurements.getSteps());
+                System.out.println("\t"+atView.get(i).measurements.getContactPhase());
+            }
+
+            static_accViews.getPanes().add(atView.get(i).TabCreator());
+        }
     }
 }

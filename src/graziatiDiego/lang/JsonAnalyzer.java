@@ -1,4 +1,4 @@
-package src.lang;
+package graziatiDiego.lang;
 
 import java.io.File;
 import java.io.FileNotFoundException;
